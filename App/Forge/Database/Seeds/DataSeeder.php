@@ -13,7 +13,11 @@ class DataSeeder extends InstallSeeder
     public function run()
     {
         
-        //$this->call(Data\Seeder::class);
+        $this->call(Data\DriversSeeder::class);
+        $this->call(Data\MetadataTypesSeeder::class);
+        $this->call(Data\ColumnsTypesSeeder::class);
+        $this->call(Data\MetadataSeeder::class);
+        $this->call(Data\ConnectionsSeeder::class);
         
     }
     
