@@ -44,9 +44,20 @@ class PagingLogic
             ];            
         }
         
+        $data = $result->toArray()['data'];
+        
+        $columns = [];
+        foreach(array_keys(get_object_vars($data[0])) as $column) {
+            $columns []= [
+                'dataIndex'=>$column,
+                'text'=>ucfirst($column)
+            ];
+        }
+        
         return [
             'total'=>$result->total(),
-            'data'=>$result->toArray()['data']
+            'data'=>$result->toArray()['data'],
+            'metaData'=>$columns
         ];        
         
     }

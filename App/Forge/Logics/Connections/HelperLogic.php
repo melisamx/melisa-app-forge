@@ -62,7 +62,8 @@ class HelperLogic
                 'username'=>$this->connection->userName,
                 'database'=>is_null($database) ? $this->connection->database : $database,
                 'password'=>$this->connection->password,
-                'collation'=>'utf8_unicode_ci'
+                'collation'=>'utf8_unicode_ci',
+                'charset' => 'utf8',
             ]
         ]);
         
