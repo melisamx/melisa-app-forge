@@ -91,7 +91,7 @@ class AddLogic
         $fields = [];
         
         foreach($columns as $column) {
-//            dd($columns);
+            
             if( $this->ignoreField($column)) {
                 continue;
             }
@@ -173,7 +173,12 @@ class AddLogic
         
         if( !in_array($column['dataType'], [
                 'varchar',
+                'char',
         ])) {
+            return;
+        }
+        
+        if( isset($column['related'])) {
             return;
         }
         
@@ -189,7 +194,7 @@ class AddLogic
             'decimal',
             'smallint',
             'int',
-        ])) {
+        ]) || isset($column['related'])) {
             return;
         }
         

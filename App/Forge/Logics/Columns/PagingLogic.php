@@ -35,7 +35,9 @@ class PagingLogic
         
         $result = $flyConnection->select($this->getQuery($database, $table));
         $modelConnection = $this->helperConnection->getModelConnection(); 
-        $columns = [];        
+        $columns = [];
+        $columnsKeys = [];
+        $indexes = [];
         
         foreach($result as $i => $column) {
             
@@ -70,13 +72,44 @@ class PagingLogic
                 $definition ['scale']= (int)$column->NUMERIC_SCALE;
             }
             
+            /**
+             * detect index unique, but not detect repet column definition
+             */
+            if( !isset($columnsKeys[$definition['columnName']])) {
+                $columnsKeys [$definition['columnName']]= [
+                    'type'=>$column->CONSTRAINT_TYPE,
+                    'index'=>$i
+                ];
+                
+            } else {
+                
+                if($column->CONSTRAINT_TYPE === 'UNIQUE') {
+                    
+                    $columns [$columnsKeys [$definition['columnName']]['index']]['indexName'] = $column->CONSTRAINT_NAME;
+                    
+                } else {
+                    unset($columns [$columnsKeys [$definition['columnName']]['index']]);
+                    $definition ['indexName'] = $column->CONSTRAINT_NAME;
+                }
+                
+            }
+            
+            if( $column->CONSTRAINT_TYPE === 'UNIQUE') {
+                if( !isset($indexes [$column->CONSTRAINT_NAME])) {
+                    $indexes [$column->CONSTRAINT_NAME]= [ $definition['columnName'] ];
+                } else {
+                    $indexes [$column->CONSTRAINT_NAME][]= $definition['columnName'];
+                }
+            }
+            
             $columns []= $definition;
             
         }
         
         return [
             'total'=>count($columns),
-            'data'=>$columns
+            'data'=>$columns,
+            'indexes'=>$indexes
         ];
         
     }
@@ -98,7 +131,7 @@ class PagingLogic
                 'c.NUMERIC_PRECISION,',
                 'c.NUMERIC_SCALE,',
                 'n.CONSTRAINT_TYPE,',
-                'n.CONSTRAINT_TYPE,',
+                'n.CONSTRAINT_NAME,',
                 'k.REFERENCED_TABLE_SCHEMA,',
                 'k.REFERENCED_TABLE_NAME,',
                 'k.REFERENCED_COLUMN_NAME',
