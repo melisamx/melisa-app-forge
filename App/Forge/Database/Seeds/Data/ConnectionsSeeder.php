@@ -24,7 +24,7 @@ class ConnectionsSeeder extends InstallSeeder
             'idDriver'=>Drivers::where('key', 'mysql')->first()->id,
             'userName'=>env('DB_USERNAME'),
             'hostname'=>'localhost',
-            'key'=>str_slug($name),
+            'key'=>'default',
             'port'=>3306,
             'password'=>env('DB_PASSWORD'),
             'database'=>env('DB_DATABASE_APP'),
