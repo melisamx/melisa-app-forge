@@ -19,6 +19,7 @@ class ModulesUniversalSeeder extends Seeder
         $this->call(Universal\Columns\ListSeeder::class);
         $this->call(Universal\Records\PagingSeeder::class);
         $this->call(Universal\Records\DeleteSeeder::class);
+        $this->call(Universal\Records\CreateSeeder::class);
         
     }
     

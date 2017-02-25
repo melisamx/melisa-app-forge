@@ -23,6 +23,7 @@ class ViewModule extends Outbuildings
                     'columns'=>$this->module('task.forge.columns.list'),
                     'records'=>$this->module('task.forge.records.paging'),
                     'recordsDelete'=>$this->module('task.forge.records.delete', false),
+                    'recordsCreate'=>$this->module('task.forge.records.create', false),
                 ],
                 'wrapper'=>[
                     'title'=>'Forge Database'

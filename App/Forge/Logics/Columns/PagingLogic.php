@@ -44,14 +44,19 @@ class PagingLogic
                 'database'=>$modelConnection->database,
                 'table'=>$table,
                 'columnName'=>$column->COLUMN_NAME,
+                'dataType'=>$column->DATA_TYPE,
                 'required'=>$column->IS_NULLABLE === 'NO' ? true : false,
-                'isAutoIncrement'=>is_null($column->AUTO_INCREMENT) ? false : true,
+                'isAutoIncrement'=>false,
                 'isPrimaryKey'=>$column->CONSTRAINT_TYPE === 'PRIMARY KEY' ? true : false,
                 'isForeignKey'=>$column->CONSTRAINT_TYPE === 'FOREIGN KEY' ? true : false,
                 'maxLength'=>($column->CHARACTER_MAXIMUM_LENGTH > 0) ? 
                     (int)$column->CHARACTER_MAXIMUM_LENGTH : 
                     (int)$column->NUMERIC_PRECISION
             ];
+            
+            if($definition ['isPrimaryKey']) {                
+                $definition ['isAutoIncrement']= is_null($column->AUTO_INCREMENT) ? false : true;
+            }
             
             if( $definition['isForeignKey']) {
                 $definition ['related']= [

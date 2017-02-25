@@ -37,6 +37,10 @@ Ext.define('Melisa.forge.view.desktop.forge.view.Browser', {
             ],
             listeners: {
                 itemclick: 'onItemclickDatabases'
+            },
+            bbar: {
+                xtype: 'pagingtoolbar',
+                displayInfo: true
             }
         },
         {
@@ -60,6 +64,10 @@ Ext.define('Melisa.forge.view.desktop.forge.view.Browser', {
             ],
             listeners: {
                 itemclick: 'onItemclickTable'
+            },
+            bbar: {
+                xtype: 'pagingtoolbar',
+                displayInfo: true
             }
         },
         {

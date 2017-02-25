@@ -17,9 +17,9 @@ class OptionsSeeder extends InstallSeeder
             'name'=>'Option main de aplicación forge',
             'text'=>'Forge',
             'isSubMenu'=>true,
-            'iconClassSmall'=>'x-fa fa fa-cog',
-            'iconClassMedium'=>'x-fa fa fa-cog fa-3x',
-            'iconClassLarge'=>'x-fa fa fa-cog fa-5x',
+            'iconClassSmall'=>'x-fa fa fa-database',
+            'iconClassMedium'=>'x-fa fa fa-database fa-3x',
+            'iconClassLarge'=>'x-fa fa fa-database fa-5x',
         ]);
         
     }

@@ -3,8 +3,13 @@ Ext.define('Melisa.forge.view.desktop.forge.view.BrowserController', {
     alias: 'controller.forgeforgebrowser',
     
     requires: [
-        'Melisa.ux.confirmation.Button'
+        'Melisa.ux.confirmation.Button',
+        'Melisa.forge.view.desktop.form.add.Wrapper'
     ],
+    
+    config: {
+        windowCreate: null
+    },
     
     onItemclickDatabases: function(view, record) {
         
@@ -47,7 +52,8 @@ Ext.define('Melisa.forge.view.desktop.forge.view.BrowserController', {
             vm = me.getViewModel(),
             tabId = 'table' + record.get('id').replace('-', ''),
             tabRecord = view.down('#' + tabId),
-            moduleDelete = vm.get('moduleDelete');
+            moduleDelete = vm.get('moduleDelete'),
+            moduleCreate = vm.get('moduleCreate');
         
         if( tabRecord) {
             view.setActiveItem(tabRecord);
@@ -73,6 +79,19 @@ Ext.define('Melisa.forge.view.desktop.forge.view.BrowserController', {
                                 '/tables/',
                                 record.get('name'),
                                 '/delete/'
+                            ].join('')
+                        },
+                        create: {
+                            allowed: moduleCreate.allowed,
+                            nameSpace: 'Melisa.forge.view.desktop.form.add.Wrapper',
+                            url: [
+                                '/forge.php/forms/',
+                                vm.get('keyDatabase'),
+                                '/',
+                                vm.get('database'),
+                                '/',
+                                record.get('name'),
+                                '/add/'
                             ].join('')
                         }
                     }
@@ -107,6 +126,16 @@ Ext.define('Melisa.forge.view.desktop.forge.view.BrowserController', {
                     },
                     plugins: {
                         ptype: 'buttonconfirmation'
+                    }
+                },
+                {
+                    iconCls: 'x-fa fa-plus',
+                    bind: {
+                        melisa: '{modules.create}',
+                        hidden: '{!modules.create.allowed}'
+                    },
+                    listeners: {
+                        click: 'moduleRun'
                     }
                 }
             ],

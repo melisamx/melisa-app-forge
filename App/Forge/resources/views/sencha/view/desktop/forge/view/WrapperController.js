@@ -32,6 +32,9 @@ Ext.define('Melisa.forge.view.desktop.forge.view.WrapperController', {
                 url: vm.get('modules.databases'),
                 idConnection: record.get('id'),
                 moduleDelete: vm.get('modules.recordsDelete'),
+                moduleCreate: vm.get('modules.recordsCreate'),
+                keyDatabase: record.get('key'),
+                table: record.get('name')
             })
         }
         

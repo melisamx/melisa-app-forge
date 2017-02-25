@@ -1,9 +1,12 @@
 <?php namespace App\Forge\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use Melisa\Laravel\Http\Controllers\Controller;
 
 use App\Forge\Logics\Records\PagingLogic;
 use App\Forge\Logics\Records\DeleteLogic;
+use App\Forge\Logics\Records\CreateLogic;
 use App\Forge\Http\Requests\Records\PagingRequest;
 use App\Forge\Http\Requests\Records\DeleteRequest;
 
@@ -45,6 +48,15 @@ class RecordsController extends Controller
             $logic->init(
                 $request->allValid()
             )
+        );
+        
+    }
+    
+    public function create($keyConnection, $database, $table, Request $request, CreateLogic $logic)
+    {
+        
+        return response()->data(
+            $logic->init($keyConnection, $database, $table, $request->all())
         );
         
     }

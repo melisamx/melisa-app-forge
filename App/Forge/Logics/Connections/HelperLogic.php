@@ -17,6 +17,19 @@ class HelperLogic
         $this->connecitonsRepo = $connecitonsRepo;
     }
     
+    public function getFlyConnectionByKey($key, $database = null)
+    {
+        
+        $this->connection = $this->getConnectionByKey($key);
+        
+        if( !$this->connection) {
+            return false;
+        }
+        
+        return $this->createFlyConnection($this->connection->id, $database);
+        
+    }
+    
     public function getFlyConnection($idConnection, $database = null)
     {
         
@@ -33,6 +46,23 @@ class HelperLogic
     public function getModelConnection()
     {
         return $this->connection;
+    }
+    
+    public function getConnectionByKey($key)
+    {
+        
+        $connection = $this->connecitonsRepo
+            ->with([
+                'driver'
+            ])
+            ->findBy('key', $key);
+        
+        if( !$connection) {
+            return false;
+        }
+        
+        return $connection;
+        
     }
     
     public function getConnection($idConnection)

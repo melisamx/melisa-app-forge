@@ -14,7 +14,7 @@ abstract class ConnectionsAbstract extends BaseUuid
     protected $table = 'connections';
     
     protected $fillable = [
-        'id', 'name', 'idDriver', 'idIdentityCreated', 'active', 'hostname', 'userName', 'port', 'createdAt', 'updatedAt', 'idIdentityUpdated', 'password', 'lastSync'
+        'id', 'name', 'key', 'idDriver', 'idIdentityCreated', 'active', 'hostname', 'userName', 'port', 'createdAt', 'updatedAt', 'idIdentityUpdated', 'password', 'lastSync', 'database'
     ];
     
     public $timestamps = true;

@@ -15,13 +15,16 @@ class ConnectionsSeeder extends InstallSeeder
     public function run()
     {
         
+        $name = 'Forge test';
+        
         Connections::updateOrCreate([
-            'name'=>'Forge test'
+            'name'=>$name
         ], [
             'idIdentityCreated'=>$this->findIdentity()->id,
             'idDriver'=>Drivers::where('key', 'mysql')->first()->id,
             'userName'=>env('DB_USERNAME'),
             'hostname'=>'localhost',
+            'key'=>str_slug($name),
             'port'=>3306,
             'password'=>env('DB_PASSWORD'),
             'database'=>env('DB_DATABASE_APP'),

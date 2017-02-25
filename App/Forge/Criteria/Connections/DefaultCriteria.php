@@ -28,6 +28,7 @@ class DefaultCriteria extends FilterCriteria
                 ->select([
                     'connections.id',
                     'connections.name',
+                    'connections.key',
                     'd.name as driverName',
                     'd.key as driverKey',
                     'connections.hostname',
