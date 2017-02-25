@@ -1,6 +1,7 @@
 <?php namespace App\Forge\Logics\Records;
 
 use App\Forge\Logics\Connections\HelperLogic;
+use Melisa\core\LogicBusiness;
 
 /**
  * Paging list records on table
@@ -9,6 +10,7 @@ use App\Forge\Logics\Connections\HelperLogic;
  */
 class DeleteLogic
 {
+    use LogicBusiness;
     
     protected $helperConnection;
     
@@ -26,32 +28,41 @@ class DeleteLogic
             return false;
         }
         
-        return $this->deleteRecord($flyConnection, $input);
+        $flyConnection->beginTransaction();
+        
+        $result = $this->deleteRecord($flyConnection, $input);
+        
+        if( !$result) {
+            return false;
+        }
+        
+        $modelConnection = $this->helperConnection->getModelConnection();
+        
+        $event = [
+            'id'=>$input['id'],
+            'keyConnection'=>$modelConnection->key,
+            'database'=>$input['database'],
+            'table'=>$input['table'],
+        ];
+        
+        if( !$this->emitEvent('records.delete.success', $event)) {
+            return $flyConnection->commit();
+        }
+        
+        $flyConnection->commit();
+        return $event;
         
     }
     
     public function deleteRecord(&$flyConnection, $input)
     {
         
-        $flyConnection->beginTransaction();
-        
-        $result = $flyConnection
+        return $flyConnection
                 ->table($input['table'])
                 ->where([
                     'id'=>$input['id']
                 ])
-                ->delete();
-        
-        if( !$result) {
-            $flyConnection->rollBack();
-            return false;            
-        }
-        
-        $flyConnection->commit();
-        
-        return [
-            'id'=>$input['id']
-        ];        
+                ->delete();      
         
     }
     

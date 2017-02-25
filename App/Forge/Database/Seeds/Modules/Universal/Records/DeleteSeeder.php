@@ -26,7 +26,7 @@ class DeleteSeeder extends InstallSeeder
                 ],
                 'event'=>[
                     'key'=>'event.forge.records.delete.success',
-                    'description'=>'Registro de tabla eliminado'
+                    'description'=>'Registro eliminado (forge)'
                 ],
             ],
         ]);

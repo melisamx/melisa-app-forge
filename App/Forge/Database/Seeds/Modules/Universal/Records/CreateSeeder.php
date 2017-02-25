@@ -26,7 +26,7 @@ class CreateSeeder extends InstallSeeder
                 ],
                 'event'=>[
                     'key'=>'event.forge.records.create.success',
-                    'description'=>'Crear registro'
+                    'description'=>'Registro creado (forge)'
                 ]
             ],
         ]);

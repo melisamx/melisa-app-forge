@@ -18,21 +18,16 @@ class AddSeeder extends InstallSeeder
                 'name'=>'Agregar formulario',
                 'url'=>'/forge.php/forms/',
                 'description'=>'Módulo interfaz para agregar formulario',
-                'nameSpace'=>'Melisa.forge.view.desktop.contacts.add.Wrapper',
+                'nameSpace'=>'Melisa.forge.view.desktop.forms.add.Wrapper',
                 'task'=>[
-                    'key'=>'task.forge.contacts.add.access',
+                    'key'=>'task.forge.forms.add.access',
                     'name'=>'Acceso a agregar formulario',
                     'description'=>'Permitir acceso a agregar formulario',
                     'pattern'=>'access'
                 ],
-                'option'=>[
-                    'key'=>'option.forge.contacts.add.access',
-                    'name'=>'Opción para agregar formulario',
-                    'text'=>'Agregar formulario'
-                ],
                 'event'=>[
-                    'key'=>'event.forge.contacts.add.access',
-                    'description'=>'Acceso al módulo agregar formularios'
+                    'key'=>'event.forge.forms.add.access',
+                    'description'=>'Visualización de formulario agregar satisfactorio (forge)'
                 ]
             ],
         ]);

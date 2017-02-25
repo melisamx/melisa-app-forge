@@ -28,7 +28,10 @@ class ViewSeeder extends InstallSeeder
                 'option'=>[
                     'key'=>'option.forge.forge.view.access',
                     'name'=>'Opción para ver administrador de base de datos Forge de forge',
-                    'text'=>'Forge Database'
+                    'text'=>'Forge Database',
+                    'iconClassSmall'=>'x-fa fa fa-database',
+                    'iconClassMedium'=>'x-fa fa fa-database fa-3x',
+                    'iconClassLarge'=>'x-fa fa fa-database fa-5x',
                 ],
                 'menu'=>[
                     [

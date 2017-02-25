@@ -2,6 +2,7 @@
 
 use App\Forge\Logics\Connections\HelperLogic;
 use App\Forge\Logics\Columns\PagingLogic;
+use Melisa\core\LogicBusiness;
 
 /**
  * Create record on table
@@ -10,6 +11,7 @@ use App\Forge\Logics\Columns\PagingLogic;
  */
 class CreateLogic
 {
+    use LogicBusiness;
     
     protected $helperConnection;
     protected $columnsTable;
@@ -41,29 +43,36 @@ class CreateLogic
             return false;
         }
         
-        return $this->createRecord($flyConnection, $table, $input);
+        $flyConnection->beginTransaction();
+        
+        $id = $this->createRecord($flyConnection, $table, $input);
+        
+        if( !$id) {
+            return false;
+        }
+        
+        $event = [
+            'id'=>$id,
+            'keyConnection'=>$keyConnection,
+            'database'=>$database,
+            'table'=>$table,
+        ];
+        
+        if( !$this->emitEvent('records.create.success', $event)) {
+            return $flyConnection->commit();
+        }
+        
+        $flyConnection->commit();
+        return $event;
         
     }
     
     public function createRecord($flyConnection, $table, $input)
     {
         
-        $flyConnection->beginTransaction();
-        
-        $id = $flyConnection
+        return $flyConnection
                 ->table($table)
                 ->insertGetId($input);
-        
-        if( !$id) {
-            $flyConnection->rollBack();
-            return false;            
-        }
-        
-        $flyConnection->commit();
-        
-        return [
-            'id'=>$id
-        ];
         
     }
     

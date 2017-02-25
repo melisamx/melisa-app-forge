@@ -3,6 +3,7 @@
 use App\Forge\Logics\Connections\HelperLogic;
 use App\Forge\Logics\Columns\PagingLogic;
 use App\Core\Logics\Modules\Outbuildings\Module;
+use Melisa\core\LogicBusiness;
 
 /**
  * Description of AddLogic
@@ -11,6 +12,7 @@ use App\Core\Logics\Modules\Outbuildings\Module;
  */
 class AddLogic
 {
+    use LogicBusiness;
     
     protected $helperConnection;
     protected $columnsTable;
@@ -39,6 +41,17 @@ class AddLogic
         }
         
         $metadata ['fields']= $this->getFields($flyConnection, $database, $table);
+        
+//        $event = [
+//            'id'=>$id,
+//            'keyConnection'=>$keyConnection,
+//            'database'=>$database,
+//            'table'=>$table,
+//        ];
+//        
+//        if( !$this->emitEvent('form.add.build.success', $event)) {
+//            return $flyConnection->commit();
+//        }
         
         return $metadata;
         

@@ -1,6 +1,7 @@
 <?php namespace App\Forge\Logics\Records;
 
 use App\Forge\Logics\Connections\HelperLogic;
+use Melisa\core\LogicBusiness;
 
 /**
  * Paging list records on table
@@ -9,6 +10,7 @@ use App\Forge\Logics\Connections\HelperLogic;
  */
 class PagingLogic
 {
+    use LogicBusiness;
     
     protected $helperConnection;
     
@@ -26,7 +28,25 @@ class PagingLogic
             return false;
         }
         
-        return $this->getRecords($flyConnection, $input);
+        $result = $this->getRecords($flyConnection, $input);
+        
+        if( $result === false) {
+            return false;
+        }
+        
+        $modelConnection = $this->helperConnection->getModelConnection();
+        
+        $event = [
+            'keyConnection'=>$modelConnection->key,
+            'database'=>$input['database'],
+            'table'=>$input['table'],
+        ];
+        
+        if( !$this->emitEvent('records.paging.success', $event)) {
+            return false;
+        }
+        
+        return $result;
         
     }
     

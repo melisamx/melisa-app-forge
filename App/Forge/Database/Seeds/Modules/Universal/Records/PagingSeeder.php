@@ -24,6 +24,10 @@ class PagingSeeder extends InstallSeeder
                     'description'=>'Permitir paginar registros de una tabla',
                     'pattern'=>'read'
                 ],
+                'event'=>[
+                    'key'=>'event.forge.records.paging.success',
+                    'description'=>'Registros paginados (forge)'
+                ],
             ],
         ]);
         
