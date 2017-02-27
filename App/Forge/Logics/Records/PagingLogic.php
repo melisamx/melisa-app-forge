@@ -22,10 +22,10 @@ class PagingLogic
     public function init($input = [])
     {
         
-        $flyConnection = $this->helperConnection->getFlyConnection($input['idConnection'], $input['database']);
+        $flyConnection = $this->getFlyConnection($input);
         
         if( !$flyConnection) {
-            return false;
+            return $this->error('Imposible get connection on fly');
         }
         
         $result = $this->getRecords($flyConnection, $input);
@@ -48,6 +48,11 @@ class PagingLogic
         
         return $result;
         
+    }
+    
+    public function getFlyConnection(&$input)
+    {   
+        return $this->helperConnection->getFlyConnection($input['idConnection'], $input['database']);
     }
     
     public function getRecords(&$flyConnection, $input)

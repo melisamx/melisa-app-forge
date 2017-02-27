@@ -1,9 +1,9 @@
 <?php namespace App\Forge\Logics\Forms;
 
+use Melisa\core\LogicBusiness;
 use App\Forge\Logics\Connections\HelperLogic;
 use App\Forge\Logics\Columns\PagingLogic;
 use App\Core\Logics\Modules\Outbuildings\Module;
-use Melisa\core\LogicBusiness;
 
 /**
  * Description of AddLogic
@@ -64,7 +64,7 @@ class AddLogic
         
         return [
             'tpls'=>[
-                'submit'=>"$modelConnection->key/$database/$table/create"
+                'submit'=>"$modelConnection->key/$database/$table/"
             ],
             'modules'=>[
                 'submit'=>'task.forge.records.create'

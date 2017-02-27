@@ -16,7 +16,7 @@ class PagingTest extends TestCase
     {
         
         $user = $this->findUser();
-        $connection = Connections::where('name', 'Forge test')->first();
+        $connection = Connections::where('key', 'default')->first();
         
         $this->actingAs($user)
         ->json('get', "connections/$connection->id/databases/$connection->database/tables/connections/paging", [
@@ -24,8 +24,7 @@ class PagingTest extends TestCase
             'start'=>0,
             'limit'=>25,
         ])
-        ->dump()
-        /*->seeJson([
+        ->seeJson([
             'success'=>true,
         ])
         ->seeJsonStructure([
@@ -35,7 +34,7 @@ class PagingTest extends TestCase
                 ]
             ],
             'total'
-        ])*/;
+        ]);
         
     }
     

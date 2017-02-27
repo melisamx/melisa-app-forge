@@ -5,9 +5,11 @@ use Illuminate\Http\Request;
 use Melisa\Laravel\Http\Controllers\Controller;
 
 use App\Forge\Logics\Records\PagingLogic;
+use App\Forge\Logics\Records\PagingByKeyLogic;
 use App\Forge\Logics\Records\DeleteLogic;
 use App\Forge\Logics\Records\CreateLogic;
 use App\Forge\Http\Requests\Records\PagingRequest;
+use App\Forge\Http\Requests\Records\PagingByKeyRequest;
 use App\Forge\Http\Requests\Records\DeleteRequest;
 
 /**
@@ -23,6 +25,23 @@ class RecordsController extends Controller
         
         $request->merge([
             'idConnection'=>$idConnection,
+            'database'=>$database,
+            'table'=>$table,
+        ]);
+
+        return response()->paging(
+            $logic->init(
+                $request->allValid()
+            )
+        );
+        
+    }
+    
+    public function pagingByKey($keyConnection, $database, $table, PagingByKeyRequest $request, PagingByKeyLogic $logic)
+    {
+        
+        $request->merge([
+            'keyConnection'=>$keyConnection,
             'database'=>$database,
             'table'=>$table,
         ]);

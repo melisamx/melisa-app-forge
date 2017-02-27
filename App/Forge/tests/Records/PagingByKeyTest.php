@@ -1,10 +1,9 @@
 <?php namespace App\Forge\tests\Records;
 
-use App\Forge\tests\TestCase;
-use App\Forge\Models\Connections;
 use Melisa\Laravel\Database\InstallUser;
+use App\Forge\tests\TestCase;
 
-class DeleteTest extends TestCase
+class PagingByKeyTest extends TestCase
 {
     use InstallUser;
     
@@ -16,11 +15,13 @@ class DeleteTest extends TestCase
     {
         
         $user = $this->findUser();
-        $connection = Connections::where('name', 'Forge test')->first();
+        $database = env('DB_DATABASE_APP');
         
         $this->actingAs($user)
-        ->json('post', "connections/$connection->id/databases/$connection->database/tables/connections/delete", [
-            'id'=>$connection->id,
+        ->json('get', "records/paging/default/$database/connections/", [
+            'page'=>1,
+            'start'=>0,
+            'limit'=>25,
         ])
         ->seeJson([
             'success'=>true,
