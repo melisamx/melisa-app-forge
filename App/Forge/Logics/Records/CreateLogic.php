@@ -47,7 +47,7 @@ class CreateLogic
         
         $id = $this->createRecord($flyConnection, $table, $input);
         
-        if( !$id) {
+        if( $id === false) {
             return false;
         }
         
@@ -92,7 +92,7 @@ class CreateLogic
                 $column['isPrimaryKey'] && in_array($column['dataType'], [
                     'smallint',
                     'int'
-                ])
+                ]) && $column['isAutoIncrement']
                 )) {
                 continue;
             }
