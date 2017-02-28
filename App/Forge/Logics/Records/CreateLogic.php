@@ -83,6 +83,21 @@ class CreateLogic
         
         foreach($columns as $column) {
             
+            if( $column['columnName'] === 'idIdentityCreated') {
+                $input ['idIdentityCreated']= $this->getIdentity();
+            }
+            
+            if( in_array($column['columnName'], [
+                'idIdentityUpdated'
+                ])) {
+                continue;
+            }
+            
+            if( $column['columnName'] === 'createdAt' && isset($column['defaultValue']) 
+                && !is_null($column['defaultValue'])) {
+                continue;
+            }
+            
             /**
              * ignore primary key
              * autoincrement and uuid
@@ -110,7 +125,7 @@ class CreateLogic
             }
             
         }
-        
+//        dd($input);
         $validator = validator()->make($input, $validations);
         
         if( $validator->fails()) {
@@ -123,7 +138,12 @@ class CreateLogic
     
     public function setErrors(&$validator)
     {
-        dd($validator);
+        
+        foreach($validator->errors()->toArray() as $field => $error) {
+            $this->error($field . ' is invalid: '. implode(',', $error));
+        }
+        return false;
+        
     }
     
     public function getColumns($flyConnection, $database, $table)

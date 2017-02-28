@@ -72,6 +72,10 @@ class PagingLogic
                 $definition ['scale']= (int)$column->NUMERIC_SCALE;
             }
             
+            if( !is_null($column->COLUMN_DEFAULT)) {
+                $definition ['defaultValue']= $column->COLUMN_DEFAULT;
+            }
+            
             /**
              * detect index unique, but not detect repet column definition
              */
