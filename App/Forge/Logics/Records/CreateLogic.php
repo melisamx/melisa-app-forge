@@ -70,9 +70,19 @@ class CreateLogic
     public function createRecord($flyConnection, $table, $input)
     {
         
-        return $flyConnection
+        $id = $flyConnection
                 ->table($table)
                 ->insertGetId($input);
+        
+        if( $id === false) {
+            return false;
+        }
+        
+        if (isset($input['id']) && !empty($input['id'])) {
+            return $id;
+        }
+        
+        return $id;
         
     }
     
@@ -98,12 +108,17 @@ class CreateLogic
                 continue;
             }
             
+            if( $column['isPrimaryKey'] && $column['maxLength'] == 36 && 
+                    $column['columnName'] === 'id') {
+                $input ['id']= app('uuid')->v5();
+                continue;
+            }
+            
             /**
              * ignore primary key
              * autoincrement and uuid
              */
             if( $column['isAutoIncrement'] || (
-                $column['isPrimaryKey'] && $column['maxLength'] == 36) || (
                 $column['isPrimaryKey'] && in_array($column['dataType'], [
                     'smallint',
                     'int'
@@ -124,8 +139,14 @@ class CreateLogic
                 $validations [$column['columnName']][]= 'sometimes';
             }
             
+            if( $column['dataType'] === 'tinyint' 
+                    && isset($input[$column['columnName']]) 
+                    && $input[$column['columnName']] === 'on') {
+                $input [$column['columnName']]= true;
+            }
+            
         }
-//        dd($input);
+        
         $validator = validator()->make($input, $validations);
         
         if( $validator->fails()) {
