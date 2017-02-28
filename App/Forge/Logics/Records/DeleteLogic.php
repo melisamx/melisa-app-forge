@@ -22,7 +22,7 @@ class DeleteLogic
     public function init($input = [])
     {
         
-        $flyConnection = $this->helperConnection->getFlyConnection($input['idConnection'], $input['database']);
+        $flyConnection = $this->getFlyConnection($input);
         
         if( !$flyConnection) {
             return false;
@@ -52,6 +52,11 @@ class DeleteLogic
         $flyConnection->commit();
         return $event;
         
+    }
+    
+    public function getFlyConnection(&$input)
+    {   
+        return $this->helperConnection->getFlyConnection($input['idConnection'], $input['database']);
     }
     
     public function deleteRecord(&$flyConnection, $input)

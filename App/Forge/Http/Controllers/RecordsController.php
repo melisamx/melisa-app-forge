@@ -7,10 +7,12 @@ use Melisa\Laravel\Http\Controllers\Controller;
 use App\Forge\Logics\Records\PagingLogic;
 use App\Forge\Logics\Records\PagingByKeyLogic;
 use App\Forge\Logics\Records\DeleteLogic;
+use App\Forge\Logics\Records\DeleteByKeyLogic;
 use App\Forge\Logics\Records\CreateLogic;
 use App\Forge\Http\Requests\Records\PagingRequest;
 use App\Forge\Http\Requests\Records\PagingByKeyRequest;
 use App\Forge\Http\Requests\Records\DeleteRequest;
+use App\Forge\Http\Requests\Records\DeleteByKeyRequest;
 
 /**
  * 
@@ -59,6 +61,23 @@ class RecordsController extends Controller
         
         $request->merge([
             'idConnection'=>$idConnection,
+            'database'=>$database,
+            'table'=>$table,
+        ]);
+        
+        return response()->data(
+            $logic->init(
+                $request->allValid()
+            )
+        );
+        
+    }
+    
+    public function deleteByKey($keyConnection, $database, $table, DeleteByKeyRequest $request, DeleteByKeyLogic $logic)
+    {
+        
+        $request->merge([
+            'keyConnection'=>$keyConnection,
             'database'=>$database,
             'table'=>$table,
         ]);
