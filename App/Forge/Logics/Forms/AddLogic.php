@@ -40,7 +40,7 @@ class AddLogic
             return false;
         }
         
-        $metadata ['fields']= $this->getFields($flyConnection, $database, $table);
+        $metadata ['fields']= $this->getFields($keyConnection, $flyConnection, $database, $table);
         
 //        $event = [
 //            'id'=>$id,
@@ -75,7 +75,7 @@ class AddLogic
         ];        
     }
     
-    public function getFields($flyConnection, $database, $table)
+    public function getFields($keyConnection, $flyConnection, $database, $table)
     {
         
         $modelConnection = $this->helperConnection->getModelConnection();
@@ -94,11 +94,11 @@ class AddLogic
             return [];
         }
         
-        return $this->buildFields($columns['data'], $database, $table);
+        return $this->buildFields($keyConnection, $columns['data'], $database, $table);
         
     }
     
-    public function buildFields(&$columns, $database, $table)
+    public function buildFields($keyConnection, &$columns, $database, $table)
     {
         
         $fields = [];
@@ -115,7 +115,7 @@ class AddLogic
                 'fieldLabel'=>ucfirst($column['columnName'])
             ];
             
-            $this->buildCombobox($column, $fieldDefinition, $database, $table);
+            $this->buildCombobox($keyConnection, $column, $fieldDefinition, $database, $table);
             $this->buildTextfield($column, $fieldDefinition);
             $this->buildDatefield($column, $fieldDefinition);
             $this->buildNumberfield($column, $fieldDefinition);
@@ -132,7 +132,7 @@ class AddLogic
         
     }
     
-    public function buildCombobox(&$column, &$fieldDefinition, $database, $table)
+    public function buildCombobox($keyConnection, &$column, &$fieldDefinition, $database, $table)
     {
         
         if( !isset($column['related'])) {
@@ -163,6 +163,27 @@ class AddLogic
                     'type'=>'json',
                     'rootProperty'=>'data'
                 ]
+            ]
+        ];
+        
+        $fieldDefinition ['bind']= [
+            'melisa'=>[
+                'url'=>implode('', [
+                    '/forge.php/forms/',
+                    $keyConnection,
+                    "/$database/",
+                    $column['related']['table'],
+                    '/add/'
+                ]),
+                'nameSpace'=>'Melisa.forge.view.desktop.form.add.Wrapper'
+            ]
+        ];
+        
+        $fieldDefinition ['triggers']= [
+            'add'=>[
+                'cls'=>'x-form-trigger-default x-fa fa-plus',
+                'handler'=>'moduleRun',
+                'focusOnMousedown'=>true
             ]
         ];
         

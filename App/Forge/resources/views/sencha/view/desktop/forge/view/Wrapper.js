@@ -14,6 +14,7 @@ Ext.define('Melisa.forge.view.desktop.forge.view.Wrapper', {
     
     controller: 'forgeforgeview',
     tabPosition: 'bottom',
+    iconCls: 'x-fa fa fa-database',
     viewModel: {
         type: 'forgeforgeview'
     },
