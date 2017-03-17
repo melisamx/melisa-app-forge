@@ -18,7 +18,7 @@ class DatabaseSeeder extends InstallSeeder
         $this->call(ModulesSeeder::class);
         $this->call(DataSeeder::class);
         
-        $this->clearLogs();
+        $this->cleanLogs();
         
     }
     
