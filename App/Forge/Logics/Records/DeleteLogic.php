@@ -45,7 +45,7 @@ class DeleteLogic
             'table'=>$input['table'],
         ];
         
-        if( !$this->emitEvent('records.delete.success', $event)) {
+        if( !$this->emitEvent('forge.records.delete.success', $event)) {
             return $flyConnection->commit();
         }
         

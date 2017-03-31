@@ -42,7 +42,7 @@ class PagingLogic
             'table'=>$input['table'],
         ];
         
-        if( !$this->emitEvent('records.paging.success', $event)) {
+        if( !$this->emitEvent('forge.records.paging.success', $event)) {
             return false;
         }
         

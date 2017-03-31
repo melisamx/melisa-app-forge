@@ -58,7 +58,7 @@ class CreateLogic
             'table'=>$table,
         ];
         
-        if( !$this->emitEvent('records.create.success', $event)) {
+        if( !$this->emitEvent('forge.records.create.success', $event)) {
             return $flyConnection->commit();
         }
         
