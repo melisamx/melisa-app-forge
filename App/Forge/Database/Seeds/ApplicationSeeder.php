@@ -18,7 +18,7 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Forge',
             'nameSpace'=>'Melisa.forge',
             'typeSecurity'=>'art',
-            'version'=>'1.0.3'
+            'version'=>'1.1.0'
         ]);
         
     }
