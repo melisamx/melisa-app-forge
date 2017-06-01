@@ -1,4 +1,6 @@
-<?php namespace App\Forge;
+<?php
+
+namespace App\Forge;
 
 use Melisa\Laravel\ApplicationBase;
 

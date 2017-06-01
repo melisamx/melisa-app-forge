@@ -1,4 +1,6 @@
-<?php namespace App\Forge\Database\Seeds;
+<?php
+
+namespace App\Forge\Database\Seeds;
 
 use Melisa\Laravel\Database\InstallSeeder;
 
@@ -18,7 +20,7 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Forge',
             'nameSpace'=>'Melisa.forge',
             'typeSecurity'=>'art',
-            'version'=>'1.1.0'
+            'version'=>'1.2.0'
         ]);
         
     }
