@@ -14,15 +14,13 @@ class ApplicationSeeder extends InstallSeeder
     
     public function run()
     {
-        
         $this->installApplication('forge', [
             'name'=>'Forge',
             'description'=>'Application Forge',
             'nameSpace'=>'Melisa.forge',
             'typeSecurity'=>'art',
-            'version'=>'1.2.0'
-        ]);
-        
+            'version'=>'1.2.1'
+        ]);        
     }
     
 }
