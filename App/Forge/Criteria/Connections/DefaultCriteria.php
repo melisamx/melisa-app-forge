@@ -1,7 +1,8 @@
-<?php namespace App\Forge\Criteria\Connections;
+<?php
+
+namespace App\Forge\Criteria\Connections;
 
 use Melisa\Laravel\Criteria\FilterCriteria;
-use Melisa\Repositories\Contracts\RepositoryInterface;
 
 /**
  * 
@@ -11,32 +12,28 @@ use Melisa\Repositories\Contracts\RepositoryInterface;
 class DefaultCriteria extends FilterCriteria
 {
     
-    public function apply($model, RepositoryInterface $repository, array $input = [])
-    {
-        
-        $builder = parent::apply($model, $repository, $input);
-        
+    public function apply($model, $repository, array $input = [])
+    {        
+        $builder = parent::apply($model, $repository, $input);        
         $builder = $builder->join('drivers as d', 'd.id', '=', 'connections.idDriver');
         
-        if( isset($input['query'])) {
-            
-            $builder = $builder->where('connections.name', 'like', '%' . $input['query'] . '%');
-            
+        if( isset($input['query'])) {            
+            $builder = $builder->where('connections.name', 'like', '%' . $input['query'] . '%');            
         }
         
         return $builder
-                ->select([
-                    'connections.id',
-                    'connections.name',
-                    'connections.key',
-                    'd.name as driverName',
-                    'd.key as driverKey',
-                    'connections.hostname',
-                    'connections.port',
-                    'connections.active',
-                    'connections.lastSync',
-                ])
-                ->orderBy('connections.name');
+            ->select([
+                'connections.id',
+                'connections.name',
+                'connections.key',
+                'd.name as driverName',
+                'd.key as driverKey',
+                'connections.hostname',
+                'connections.port',
+                'connections.active',
+                'connections.lastSync',
+            ])
+            ->orderBy('connections.name');
         
     }
     
