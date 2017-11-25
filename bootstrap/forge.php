@@ -11,15 +11,9 @@
 |
 */
 
-require_once __DIR__ . '/../App/Forge/Application.php';
+use App\Forge\Application;
 
-$app = new App\Forge\Application(
-    [
-        'base'=>  realpath(__DIR__ . '/../App/Forge'),
-        'storage'=> realpath(__DIR__ . '/../App/Forge/storage'),
-        'storageSession'=>realpath(__DIR__ . '/../storage/framework/sessions'),
-    ]
-);
+$app = new App\Forge\Application(realpath(__DIR__ . '/../App/Forge'));
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +28,7 @@ $app = new App\Forge\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    Melisa\Laravel\Http\Kernel::class
+    Melisa\Laravel\Http\KernelSecure::class
 );
 
 $app->singleton(
