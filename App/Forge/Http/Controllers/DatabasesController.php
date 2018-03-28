@@ -1,7 +1,8 @@
-<?php namespace App\Forge\Http\Controllers;
+<?php
+
+namespace App\Forge\Http\Controllers;
 
 use Melisa\Laravel\Http\Controllers\Controller;
-
 use App\Forge\Logics\Databases\PagingLogic;
 use App\Forge\Http\Requests\Databases\PagingRequest;
 
@@ -13,19 +14,17 @@ use App\Forge\Http\Requests\Databases\PagingRequest;
 class DatabasesController extends Controller
 {
     
-    public function paging($idConnection, PagingRequest $request, PagingLogic $logic)
-    {
-        
+    public function paging(
+        $idConnection, 
+        PagingRequest $request, 
+        PagingLogic $logic
+    )
+    {        
         $request->merge([
             'idConnection'=>$idConnection
         ]);
-        
-        return response()->paging(
-            $logic->init(
-                $request->allValid()
-            )
-        );
-        
+        $result = $logic->init($request->allValid());
+        return response()->paging($result);        
     }
     
 }

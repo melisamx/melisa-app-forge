@@ -1,4 +1,6 @@
-<?php namespace App\Forge\Http\Controllers\Modules;
+<?php
+
+namespace App\Forge\Http\Controllers\Modules;
 
 use Melisa\Laravel\Http\Controllers\Controller;
 use App\Forge\Modules\Forge\ViewModule;
